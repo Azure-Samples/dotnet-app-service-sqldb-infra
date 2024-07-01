@@ -10,21 +10,21 @@ services:
     language: csharp
     host: appservice
 hooks:
-  # The prepackage hook is used to create a runnable migrations bundle to be run in App Service.
-  # The migrationsbundle file needs to be included in .csproj so it can be part of the deploy package.
-  prepackage:
-    posix:
-      shell: sh
-      run: dotnet ef migrations bundle --runtime linux-x64 --force -o migrationsbundle
-      interactive: true
-      continueOnError: true
-  # The postpackage hook is used to remove the migrationsbundle file after deploy package is created.
-  postpackage:
-    posix:
-      shell: sh
-      run: rm migrationsbundle
-      interactive: true
-      continueOnError: true
+  # # The prepackage hook is used to create a runnable migrations bundle to be run in App Service.
+  # # The migrationsbundle file needs to be included in .csproj so it can be part of the deploy package.
+  # prepackage:
+  #   posix:
+  #     shell: sh
+  #     run: dotnet ef migrations bundle --runtime linux-x64 --force -o migrationsbundle
+  #     interactive: true
+  #     continueOnError: true
+  # # The postpackage hook is used to remove the migrationsbundle file after deploy package is created.
+  # postpackage:
+  #   posix:
+  #     shell: sh
+  #     run: rm migrationsbundle
+  #     interactive: true
+  #     continueOnError: true
   # The postprovision hook is used to display the connection strings and app settings for the App Service app.
   postprovision:
     posix: 
