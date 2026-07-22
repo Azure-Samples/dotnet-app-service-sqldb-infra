@@ -5,7 +5,7 @@ This is an infrastructure-only template that doesn't include any application cod
 - A [virtual network](https://learn.microsoft.com/azure/virtual-network/virtual-networks-overview).
 - A VNET-integrated [App Service](https://learn.microsoft.com/azure/app-service/overview) app.
 - An [Azure SQL Database](https://learn.microsoft.com/azure/azure-sql/database/sql-database-paas-overview), accessible only from within the virtual network.
-- An [Azure Cache for Redis](https://learn.microsoft.com/azure/azure-cache-for-redis/cache-overview), accessible only from within the virtual network.
+- An [Azure Managed Redis](https://learn.microsoft.com/azure/redis/overview), accessible only from within the virtual network.
 - A [Log Analytics workspace](https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-workspace-overview) to ship App Service logs.
 
 ## Quick deployment
@@ -37,7 +37,7 @@ azd deploy
 
 ## How does the AZD template configure passwords?
 
-Two types of secrets are involved: the SQL Database administrator password and the access key for Cache for Redis, and they are both present in the respective connection strings. The [AZD template](infra/resources.bicep) in this repo manages both connection strings in a key vault that's secured behind a private endpoint.
+Two types of secrets are involved: the SQL Database administrator password and the access key for Azure Managed Redis, and they are both present in the respective connection strings. The [AZD template](infra/resources.bicep) in this repo manages both connection strings in a key vault that's secured behind a private endpoint.
 
 To simplify the scenario, the AZD template generates a new database password each time you run `azd provision` or `azd up`, and the database connection string in the key vault is modified too. If you want to fully utilize `secretOrRandomPassword` in the [parameter file](infra/main.parameters.json) by committing the automatically generated password to the key vault the first time and reading it on subsequent `azd` commands, you must relax the networking restriction of the key vault to allow traffic from public networks. For more information, see [What is the behavior of the `secretOrRandomPassword` function?](https://learn.microsoft.com/azure/developer/azure-developer-cli/faq#what-is-the-behavior-of-the--secretorrandompassword--function).
 
